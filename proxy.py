@@ -23,12 +23,14 @@ def receive_from(connection):
 
     try:
         while True:
-            data =  connection.recv(4096)
+            data = connection.recv(4096)
             if not data:
                 break
             buffer += data
     except Exception:
         pass
+    return buffer
+
 
 def request_handler(buffer):
     return buffer
@@ -40,7 +42,7 @@ def response_handler(buffer):
 
 def proxy_handler(client_socket, remote_host, remote_port, receive_first):
 
-    remote_socket = socket.socket(socket.AF_INET, SOCK_STREAM)
+    remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     remote_socket.connect((remote_host, remote_port))
 
     if receive_first:
